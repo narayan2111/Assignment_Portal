@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Dashboard</title>
+    <title>Dashboard</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -85,7 +85,7 @@
     <div class="container">
         <h1>Welcome, <%= user.name %></h1>
 
-        <h2>Your Profile</h2>
+        <h2>Profile</h2>
         <p><strong>Email:</strong> <%= user.email %></p>
 
         <h2>Upload Assignment</h2>
@@ -106,7 +106,7 @@
             <button type="submit">Submit Assignment</button>
         </form>
 
-        <h2>Your Submitted Assignments</h2>
+        <h2>Submitted Assignments</h2>
         <table>
             <thead>
                 <tr>
@@ -124,7 +124,7 @@
             </tbody>
         </table>
 
-        <h2>All Admins</h2>
+        <h2>Admins</h2>
         <ul>
             <% admins.forEach(admin => { %>
                 <li><%= admin.name %> (<%= admin.email %>)</li>

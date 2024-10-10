@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Assignment Submission Portal</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -24,6 +24,11 @@
         h1 {
             text-align: center;
             color: #333;
+        }
+        .success-message {
+            color: green;
+            text-align: center;
+            margin-bottom: 15px;
         }
         label {
             display: block;
@@ -68,6 +73,11 @@
 <body>
     <div class="login-container">
         <h1>Login</h1>
+        
+        <% if (typeof successMessage !== 'undefined') { %>
+            <p class="success-message"><%= successMessage %></p>
+        <% } %>
+
         <form id="loginForm" method="POST">
             <label for="role">Select Role:</label>
             <select name="role" id="role" required>

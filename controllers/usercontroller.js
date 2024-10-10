@@ -29,12 +29,15 @@ router.post('/submit', async (req, res) => {
 
         // Save the user in the database
         await newUser.save();
-        res.render(`/user/dashboard?userId=${user._id}`);
+
+        // Set a success message and redirect to the login page
+        res.render('login', { successMessage: 'Account created successfully! Please log in.' });
     } catch (error) {
         console.error('Error creating user:', error);
         res.status(500).send('Error creating user');
     }
 });
+
 
 router.post('/login', async (req, res) => {
     const { email, password } = req.body;

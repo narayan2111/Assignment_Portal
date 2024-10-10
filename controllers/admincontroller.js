@@ -12,6 +12,7 @@ router.post('/submit', async (req, res) => {
     try {
         const { name, email, password } = req.body;
 
+        // Create a new admin object
         const newAdmin = new Admin({
             name,
             email,
@@ -19,13 +20,17 @@ router.post('/submit', async (req, res) => {
             role: 'admin'  // Role set to 'admin'
         });
 
+        // Save the admin in the database
         await newAdmin.save();
-        res.render(`/admin/dashboard?adminId=${admin._id}`);
+
+        // Redirect to login page with success message
+        res.render('login', { successMessage: 'Admin account created successfully! Please log in.' });
     } catch (error) {
         console.error('Error creating admin:', error);
         res.status(500).send('Error creating admin');
     }
 });
+
 
 router.get('/login', (req, res) => {
     res.render('adminLogin.ejs', { error: null });
