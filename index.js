@@ -4,6 +4,7 @@ const path = require("path");
 const bodyParser = require('body-parser');
 const userRoutes = require('./controllers/usercontroller'); // Use correct path
 const adminRoutes = require('./controllers/admincontroller'); // Use correct path
+
 require('dotenv').config();
 
 const app = express();
@@ -19,7 +20,7 @@ main().then(() => {
 }).catch(err => console.log(err));
 
 async function main() {
-    await mongoose.connect(MONGO_URI);
+    await mongoose.connect('mongodb+srv://assignment_portal_db:2ZL4H4uYW4gK0tkM@projects.wkaqy.mongodb.net/?retryWrites=true&w=majority&appName=Projects');
 }
 
 app.use('/user', userRoutes); // Use user routes
