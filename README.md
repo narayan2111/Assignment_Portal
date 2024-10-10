@@ -29,4 +29,6 @@ This project is a backend application designed for managing an assignment submis
 - **MongoDB**: NoSQL database to store user and assignment data.
 - **Mongoose**: ODM for MongoDB to manage data models.
 
+## Deployement Link :
+- https://assignment-portal.onrender.com
 
