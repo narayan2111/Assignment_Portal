@@ -1,0 +1,117 @@
+<!-- views/adminDashboard.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        h2 {
+            color: #555;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        button {
+            padding: 8px 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .logout-btn {
+            margin-top: 20px;
+            width: 100%;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome, <%= admin.name %></h1>
+
+        <h2>Your Profile</h2>
+        <p><strong>Email:</strong> <%= admin.email %></p>
+
+        <h2>View Assignments</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Student Name</th>
+                    <th>Email</th>
+                    <th>Task</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% assignments.forEach(assignment => { %>
+                    <tr>
+                        <td><%= assignment.userId.name %></td>
+                        <td><%= assignment.userId.email %></td>
+                        <td><%= assignment.task %></td>
+                        <td><%= assignment.status %></td>
+                        <td>
+                            <% if (assignment.status === 'pending') { %>
+                                <form action="/admin/assignments/<%= assignment._id %>/accept?adminId=<%= admin._id %>" method="POST" style="display:inline;">
+                                    <button type="submit">Accept</button>
+                                </form>
+                                <form action="/admin/assignments/<%= assignment._id %>/reject?adminId=<%= admin._id %>" method="POST" style="display:inline;">
+                                    <button type="submit">Reject</button>
+                                </form>
+                            <% } %>
+                        </td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+
+        <form action="/login" method="get">
+            <button type="submit" class="logout-btn">Logout</button>
+        </form>
+    </div>
+</body>
+</html>

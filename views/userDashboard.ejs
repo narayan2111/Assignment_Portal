@@ -1,0 +1,139 @@
+<!-- views/userDashboard.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        h2 {
+            color: #555;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        button {
+            padding: 8px 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        textarea {
+            width: 100%;
+            height: 100px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            padding: 8px;
+        }
+        select {
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        .logout-btn {
+            margin-top: 20px;
+            width: 100%;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome, <%= user.name %></h1>
+
+        <h2>Your Profile</h2>
+        <p><strong>Email:</strong> <%= user.email %></p>
+
+        <h2>Upload Assignment</h2>
+        <form action="/user/assignment/submit" method="POST">
+            <input type="hidden" name="userId" value="<%= user._id %>">
+            <label for="task">Assignment:</label>
+            <textarea name="task" id="task" required></textarea>
+            <br><br>
+
+            <label for="adminId">Submit to Admin:</label>
+            <select name="adminId" id="adminId" required>
+                <% admins.forEach(admin => { %>
+                    <option value="<%= admin._id %>"><%= admin.name %></option>
+                <% }) %>
+            </select>
+            <br><br>
+
+            <button type="submit">Submit Assignment</button>
+        </form>
+
+        <h2>Your Submitted Assignments</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Assignment</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% assignments.forEach(assignment => { %>
+                    <tr>
+                        <td><%= assignment.task %></td>
+                        <td><%= assignment.status %></td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+
+        <h2>All Admins</h2>
+        <ul>
+            <% admins.forEach(admin => { %>
+                <li><%= admin.name %> (<%= admin.email %>)</li>
+            <% }) %>
+        </ul>
+
+        <form action="/login" method="get">
+            <button type="submit" class="logout-btn">Logout</button>
+        </form>
+    </div>
+</body>
+</html>

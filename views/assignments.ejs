@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Assignment</title>
+</head>
+<body>
+    <h1>Submit Your Assignment</h1>
+
+    <form action="/assignment/submit" method="POST">
+        <div>
+            <label for="user">Select User:</label>
+            <select id="user" name="userId" required>
+                <% users.forEach(function(user) { %>
+                    <option value="<%= user._id %>"><%= user.name %></option>
+                <% }); %>
+            </select>
+        </div>
+
+        <div>
+            <label for="task">Assignment Task:</label>
+            <textarea id="task" name="task" required></textarea>
+        </div>
+
+        <div>
+            <label for="admin">Select Admin to Submit To:</label>
+            <select id="admin" name="adminId" required>
+                <% admins.forEach(function(admin) { %>
+                    <option value="<%= admin._id %>"><%= admin.name %></option>
+                <% }); %>
+            </select>
+        </div>
+
+        <button type="submit">Submit Assignment</button>
+    </form>
+</body>
+</html>
