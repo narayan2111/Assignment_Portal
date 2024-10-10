@@ -26,6 +26,9 @@ async function main() {
 app.use('/user', userRoutes); // Use user routes
 app.use('/admin', adminRoutes); // Use admin routes
 
+app.get("/",(req,res)=>{
+    res.render('login.ejs');
+})
 app.get("/login", (req, res) => {
     res.render('login.ejs');
 });
