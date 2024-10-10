@@ -36,22 +36,28 @@ router.get('/login', (req, res) => {
     res.render('adminLogin.ejs', { error: null });
 });
 
+// Assuming you have a route file for admin login
 router.post('/login', async (req, res) => {
     const { email, password } = req.body;
 
     try {
         const admin = await Admin.findOne({ email });
 
+        // Check if admin exists
         if (!admin || admin.password !== password) {
-            return res.redirect(`/error?message=Invalid email or password`);
+            return res.render('adminLogin', {
+                errorMessage: 'Invalid email or password' // Passing error message to the template
+            });
         }
 
+        // On successful login
         res.redirect(`/admin/dashboard?adminId=${admin._id}`);
     } catch (error) {
         console.error('Error during admin login:', error);
         res.status(500).send('Internal server error');
     }
 });
+
 
 router.get('/dashboard', async (req, res) => {
     const adminId = req.query.adminId;

@@ -39,22 +39,29 @@ router.post('/submit', async (req, res) => {
 });
 
 
+// Updated user login route
+// Assuming you have a route file for user login
 router.post('/login', async (req, res) => {
     const { email, password } = req.body;
 
     try {
         const user = await User.findOne({ email });
 
+        // Check if user exists and validate password
         if (!user || user.password !== password) {
-            return res.status(401).send('Invalid email or password');
+            return res.render('login', {
+                errorMessage: 'Invalid email or password' // Passing error message to the template
+            });
         }
 
+        // On successful login
         res.redirect(`/user/dashboard?userId=${user._id}`);
     } catch (error) {
         console.error('Error during user login:', error);
         res.status(500).send('Internal server error');
     }
 });
+
 
 router.get('/dashboard', async (req, res) => {
     const userId = req.query.userId;

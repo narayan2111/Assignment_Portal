@@ -25,8 +25,8 @@
             text-align: center;
             color: #333;
         }
-        .success-message {
-            color: green;
+        .error-message {
+            color: red; /* Style for error messages */
             text-align: center;
             margin-bottom: 15px;
         }
@@ -73,9 +73,9 @@
 <body>
     <div class="login-container">
         <h1>Login</h1>
-        
-        <% if (typeof successMessage !== 'undefined') { %>
-            <p class="success-message"><%= successMessage %></p>
+
+        <% if (typeof errorMessage !== 'undefined') { %>
+            <p class="error-message"><%= errorMessage %></p>
         <% } %>
 
         <form id="loginForm" method="POST">
