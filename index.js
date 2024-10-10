@@ -4,6 +4,7 @@ const path = require("path");
 const bodyParser = require('body-parser');
 const userRoutes = require('./controllers/usercontroller'); // Use correct path
 const adminRoutes = require('./controllers/admincontroller'); // Use correct path
+require('dotenv').config();
 
 const app = express();
 
@@ -18,7 +19,7 @@ main().then(() => {
 }).catch(err => console.log(err));
 
 async function main() {
-    await mongoose.connect('mongodb+srv://assignment_portal_db:2ZL4H4uYW4gK0tkM@projects.wkaqy.mongodb.net/?retryWrites=true&w=majority&appName=Projects');
+    await mongoose.connect(MONGO_URI);
 }
 
 app.use('/user', userRoutes); // Use user routes
@@ -28,8 +29,7 @@ app.get("/login", (req, res) => {
     res.render('login.ejs');
 });
 
-app.listen(8080, () => {
-    console.log("Server is listening");
+const PORT = process.env.PORT || 8080; // Use Render's PORT or default to 8080
+app.listen(PORT, () => {
+    console.log(`Server is listening on port ${PORT}`);
 });
-
-
