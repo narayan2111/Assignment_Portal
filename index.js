@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const path = require("path");
 const bodyParser = require('body-parser');
 const session = require('express-session');  // Import session middleware
+const MongoStore = require('connect-mongo'); // Import MongoDB session store
 const userRoutes = require('./routes/userRoutes'); // Ensure the path is correct
 const adminRoutes = require('./routes/adminRoutes'); // Ensure the path is correct
 require('dotenv').config();
@@ -16,13 +17,20 @@ app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-// Configure express-session
+// Configure express-session with MongoDB store
 app.use(session({
     secret: 'sdah213ttasjbdajdajdalkzmxkzdla',  
     resave: false,
     saveUninitialized: false,
-    cookie: { secure: false }  
+    store: MongoStore.create({
+        mongoUrl: process.env.MONGODB_URI, // Update with your MongoDB URI from environment variables
+        collectionName: 'sessions', // Name of the collection to store sessions
+        ttl: 14 * 24 * 60 * 60 // Session expiration time in seconds (14 days)
+    }),
+    cookie: { secure: process.env.NODE_ENV === 'production' } // Use secure cookies in production
 }));
+
+
 
 // Set the view engine to EJS
 app.set("views", path.join(__dirname, "views"));
@@ -34,8 +42,15 @@ main().then(() => {
 }).catch(err => console.log(err));
 
 async function main() {
-    await mongoose.connect('mongodb+srv://assignment_portal_db:2ZL4H4uYW4gK0tkM@projects.wkaqy.mongodb.net/?retryWrites=true&w=majority&appName=Projects');
+    await mongoose.connect(process.env.MONGODB_URI, {
+    });
 }
+
+// Redirect root URL to the login page
+app.get('/', (req, res) => {
+    res.redirect('/login'); // Redirect to the login page
+});
+
 
 // Middleware to check if the user is already logged in (for login route)
 function checkLogin(req, res, next) {
@@ -48,6 +63,7 @@ function checkLogin(req, res, next) {
 // Use user and admin routes
 app.use('/user', userRoutes);
 app.use('/admin', adminRoutes);
+
 
 // If a logged-in user tries to visit /login, redirect to the dashboard
 app.get("/login", checkLogin, (req, res) => {
