@@ -63,17 +63,30 @@
         a:hover {
             text-decoration: underline;
         }
+        .error-message {
+            color: red;
+            text-align: center;
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
     <div class="form-container">
         <h1>User Registration</h1>
+
+        <!-- Display Error Message -->
+        <% if (typeof errorMessage !== 'undefined') { %>
+            <div class="error-message">
+                <%= errorMessage %>
+            </div>
+        <% } %>
+
         <form id="userForm" action="/user/submit" method="POST">
             <label for="name">Name:</label>
-            <input type="text" id="name" name="name" required>
+            <input type="text" id="name" name="name" value="<%= typeof name !== 'undefined' ? name : '' %>" required>
 
             <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
+            <input type="email" id="email" name="email" value="<%= typeof email !== 'undefined' ? email : '' %>" required>
 
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" required>

@@ -78,6 +78,11 @@
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" required>
 
+            <!-- Display error message if exists -->
+            <% if (typeof errorMessage !== 'undefined') { %>
+                <p style="color: red;"><%= errorMessage %></p>
+            <% } %>
+
             <button type="submit">Submit</button>
             <a href="/admin/login">Already an Admin? Click here to Login!</a>
         </form>
