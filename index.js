@@ -2,10 +2,10 @@ const express = require("express");
 const mongoose = require("mongoose");
 const path = require("path");
 const bodyParser = require('body-parser');
-const session = require('express-session');  // Import session middleware
-const MongoStore = require('connect-mongo'); // Import MongoDB session store
-const userRoutes = require('./routes/userRoutes'); // Ensure the path is correct
-const adminRoutes = require('./routes/adminRoutes'); // Ensure the path is correct
+const session = require('express-session');  
+const MongoStore = require('connect-mongo');
+const userRoutes = require('./routes/userRoutes');
+const adminRoutes = require('./routes/adminRoutes'); 
 require('dotenv').config();
 
 const app = express();
@@ -23,8 +23,8 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     store: MongoStore.create({
-        mongoUrl: process.env.MONGODB_URI, // Update with your MongoDB URI from environment variables
-        collectionName: 'sessions', // Name of the collection to store sessions
+        mongoUrl: process.env.MONGODB_URI, 
+        collectionName: 'sessions', 
         ttl: 14 * 24 * 60 * 60 // Session expiration time in seconds (14 days)
     }),
     cookie: { secure: process.env.NODE_ENV === 'production' } // Use secure cookies in production
@@ -32,7 +32,7 @@ app.use(session({
 
 
 
-// Set the view engine to EJS
+// view engine to EJS
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
